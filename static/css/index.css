@@ -3,6 +3,44 @@ body {
 }
 
  /* changed css */
+
+ .note-container {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+}
+
+.note-box {
+  display: inline-flex;
+  align-items: center;
+  background: #fff;
+  border: 3px solid #ff4757;
+  border-radius: 20px;
+  padding: 12px 20px;
+  box-shadow: 0 5px 15px rgba(255, 71, 87, 0.1);
+  max-width: 90%;
+}
+
+.note-title {
+  font-weight: 900;
+  color: #ff4757;
+  font-size: 20px;
+  margin-right: 10px;
+  letter-spacing: 1px;
+}
+
+.note-content {
+  margin: 0;
+  font-size: 17px;
+  color: #333;
+  line-height: 1.5;
+  font-weight: 600;
+}
+
+.note-edge { color: #ff4757; }
+.note-chrome { color: #2ed573; }
+.note-ubuntu { color: #1e90ff; }
+
  .container-columns {
   display: flex;
   height: 600px; /* 固定高度，确保两列高度一致 */
@@ -124,7 +162,7 @@ body {
 }
 
 .publication-authors a {
-   color: hsl(121, 100%, 36%) !important;
+   color: hsl(32, 100%, 50%) !important;
 }
 
 .conference-authors a {
