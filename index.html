@@ -188,7 +188,7 @@
   </div>
 </section>
 
-<section class="hero teaser">
+<!-- <section class="hero teaser">
   <div class="container is-fullhd">
     <div class="hero-body">
       <div class="container">
@@ -200,13 +200,13 @@
           </br>
         </div>
         <br>
-        <!-- <h2 class="subtitle has-text-centered">
+        <h2 class="subtitle has-text-centered">
         <span class="dperact">VoxPoser</span> extracts <b>affordances</b> and <b>constraints</b> from large language models and vision-language models<br>to compose 3D value maps, which are used by motion planners to <b>zero-shot synthesize</b> trajectories for everyday manipulation tasks.
-        </h2> -->
+        </h2>
       </div>
     </div>
   </div>
-</section>
+</section> -->
 
 <section class="hero is-light is-small">
   <div class="hero-body">
@@ -405,19 +405,19 @@
   </div>
 
   <!-- Paper video. -->
-  <br>
+  <!-- <br>
   <br>
 
   <div class="container is-max-widescreen">
 
     <div class="rows">
-      <h2 class="title is-3">Video</h2>
+      <h2 class="title is-3">Video</h2> -->
       <!-- <div class="publication-video">
         <iframe src="https://www.youtube.com/embed/Yvn4eR05A3M"
                 frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
       </div> -->
-    </div>
-  </div>
+    <!-- </div>
+  </div> -->
 
 </section>
 
@@ -435,13 +435,13 @@
         <!-- Interpolating. -->
         <div class="content has-text-justified">
         <!-- <br> -->
-        <!-- </div>
-        <img src="media/figures/method.jpg" class="interpolation-image" /> -->
+        </div>
+        <img src="media/figures/framework.png" class="interpolation-image" />
         </br>
         </br>
-          <!-- <p class="content has-text-justified">
-            Given the RGB-D observation of the environment and a language instruction, LLMs generate code, which interacts with VLMs, to produce a sequence of 3D affordance maps and constraint maps (collectively referred to as value maps) grounded in the observation space of the robot <strong>(a)</strong>. The composed value maps then serve as objective functions for motion planners to synthesize trajectories for robot manipulation <strong>(b)</strong>. The entire process does not involve any additional training.
-          </p> -->
+          <p class="content has-text-justified">
+            <strong>Framework.</strong> Given natural language instruction and RGB-D observations, VFM segments semantically relevant part-level regions and overlays visual prompts to facilitate initial constraint generation. Under the MLLM-driven TAMP framework, constraint modeling is conducted hierarchically in two stages: part-level extraction and region-level refinement. The resulting 3D spatial constraints are encoded as cost function for real-time parsing and solved in closed-loop by MPPI-based optimizer in Isaac Gym, enabling joint-space velocity control with point tracking.
+          </p>
           
         </br>
         </br>
@@ -452,8 +452,9 @@
         
         <div class="columns">
           <div class="column has-text-centered">
-
-            Visualizations for Tasks
+            <span style="font-size: 0.9rem; line-height: 1.5; display: inline-block; vertical-align: middle; padding-top: 2px;">
+              🌟 Explore interactive visualization with mouse for tasks:
+            </span>
             <div class="select is-small is-rounded">     
               <select id="interative-menu-sim" onchange="updateInteractiveSim()">
               <option value="Pick-up-pestle-on-mortar" selected="selected">"Pick up pestle on mortar."</option>
@@ -475,15 +476,15 @@
 
             <div class="column has-text-centered" >
               <iframe id="interactive-html-sim-1" src="media/interactive/Pick-up-pestle-on-mortar-1.html" width="152%" height="380" frameborder="0"></iframe>
-              <!-- <p style="text-align:center;">
-                Interactive vis Map 1
-              </p> -->
+              <p style="text-align:center;">
+                Interactive visualization 1
+              </p>
             </div>
             <div class="column has-text-centered" id="second-iframe-container">
               <iframe id="interactive-html-sim-2" src="media/interactive/Pick-up-pestle-on-mortar-2.html" width="152%" height="380" frameborder="0"></iframe>
-              <!-- <p style="text-align:center;">
-                Interactive vis Map 2
-              </p> -->
+              <p style="text-align:center;">
+                Interactive visualization 2
+              </p>
             </div>
           </div>
 
@@ -494,8 +495,9 @@
 
         <div class="columns">
           <div class="column has-text-centered">
-
-            Visualizations for Household Tasks  
+            <span style="font-size: 0.9rem; line-height: 1.5; display: inline-block; vertical-align: middle; padding-top: 2px;">
+              🌟 Explore interactive visualization with mouse for Household Tasks:
+            </span>
             <div class="select is-small is-rounded">     
               <select id="interative-menu-real-household" onchange="updateInteractiveRealHousehold()">
               <option value="Fold-towel" selected="selected">"Fold towel."</option>
@@ -521,16 +523,17 @@
         
           <div class="column has-text-centered" >
               <iframe id="interactive-html-real-household" src="media/interactive/real_world/Fold-towel.html" width="150%" height="380" frameborder="0"></iframe>
-              <!-- <p style="text-align:center;">
-                Interactive vis Map 1
-              </p> -->
+              <p style="text-align:center;">
+                Interactive visualization
+              </p>
           </div>
         </div>
 
         <div class="columns">
           <div class="column has-text-centered">
-
-            Visualizations for Chemistry Lab Tasks  
+            <span style="font-size: 0.9rem; line-height: 1.5; display: inline-block; vertical-align: middle; padding-top: 2px;">
+              🌟 Explore interactive visualization with mouse for Chemistry Tasks:  
+            </span>
             <div class="select is-small is-rounded">     
               <select id="interative-menu-real-chemical-lab" onchange="updateInteractiveRealChemicalLab()">
               <option value="Grip-stir-bar-with-tweezers" selected="selected">"Grip stir bar with tweezers."</option>
@@ -556,9 +559,9 @@
         
           <div class="column has-text-centered" >
             <iframe id="interactive-html-real-chemical-lab" src="media/interactive/real_world/Grip-stir-bar-with-tweezers.html" width="150%" height="380" frameborder="0"></iframe>
-              <!-- <p style="text-align:center;">
-                Interactive vis Map 1
-              </p> -->
+              <p style="text-align:center;">
+                Interactive visualization
+              </p>
           </div>
         </div>
         
@@ -659,26 +662,25 @@
     <div class="rows">
       <h2 class="title is-3">Long-Horizon Task</h2>
       
-      <!-- <p class="content has-text-justified">
-        Because the language model output stays the same throughout the task, we can cache its output and re-evaluate the generated code using closed-loop visual feedback, which enables fast replanning using MPC. This enables VoxPoser to be robust to online disturbances.
-      </p> -->
-      
-      <!-- <p class="content has-text-centered has-text-weight-bold is-size-4">
-        Disturbance for Household Tasks
-      </p> -->
+      <p class="content has-text-justified">
+        🌟 With two-stage hierarchical constraint modeling and MLLM-driven Task and Motion Planning, ReSem3D shows strong potential for long-horizon tasks. It achieves closed-loop control through autonomous multi-stage task decomposition, combined with condition reasoning and cost optimization.
+      </p>
 
       <div class="columns" style="height: 600px;">
         <!-- 左边一列 -->
         <div class="column" style="flex: 0 0 45%;">
-          <div class="left-textbox" style="height: 50%; background-color: #f0f4f8; border-radius: 8px; padding: 10px; overflow-y: auto;">
-            <h3>User Instruction: ....</h3>
-            <p>Step 1: .... <br> Step 2: ... <br> ... <br>Step5: ... <br></p>
+          <div class="left-textbox">
+            <h3>User Instruction: Please complete a magnetic stirring experiment involving liquid and stir bar transfer with an empty beaker and tweezers.</h3>
+            <p>Step 1: Pick up the tweezers. <br> Step 2: Grasp the stir bar with the tweezers. <br> Step 3: Place the stir bar into the empty beaker. <br> Step 4: Pour the liquid into the beaker. <br> Step 5: Place the beaker on the magnetic stirrer.</p> 
           </div>
           <div style="height: 50%; margin-top: 2%; border: 1px solid #ccc; border-radius: 8px; overflow: hidden;">
             <iframe src="media/interactive/real_world/long_horizon.html" width="100%" height="100%" frameborder="0"></iframe>
           </div>
+          <p style="text-align:center;">
+            Interactive visualization
+          </p>
         </div>
-      
+
         <!-- 右边一列 -->
         <div class="column" style="flex: 0 0 55%; display: flex; justify-content: center; align-items: center;">
           <video
@@ -735,14 +737,16 @@
     </h2>
     <p class="content has-text-justified">
         <br>
-        <!-- https://vosposer-anon.github.io/ -->
-        <a href="prompts/real_planner_prompt.txt">Task Planner</a> |
-        <a href="prompts/real_composer_prompt.txt">Constraint Extraction</a> |
-        <a href="prompts/real_parse_query_obj_prompt.txt">Constraint Refinement</a> |
-        <a href="prompts/real_get_affordance_map_prompt.txt">Subtask Execution</a> |
-        <a href="prompts/real_get_avoidance_map_prompt.txt">PreConditions Building</a> |
-        <a href="prompts/real_get_rotation_map_prompt.txt">Cost Function Building</a> |
-        <a href="prompts/real_get_velocity_map_prompt.txt">PostConditions Building</a> |
+
+        <a href="prompts/MLLM_Extraction.txt">MLLM Extraction</a> |
+        <a href="prompts/MLLM_Refinement.txt">MLLM Refinement</a> |
+        <a href="prompts/Task_Planner.txt">Task Planner</a> |
+        <a href="prompts/Constraint_Extraction.txt">Constraint Extraction</a> |
+        <a href="prompts/Constraint_Refinement.txt">Constraint Refinement</a> |
+        <a href="prompts/Subtask_Execution.txt">Subtask Execution</a> |
+        <a href="prompts/PreConditions_Building.txt">PreConditions Building</a> |
+        <a href="prompts/Cost_Function_Building.txt">Cost Function Building</a> |
+        <a href="prompts/PostConditions_Building.txt">PostConditions Building</a> |
     </p>
   </div>
   </div>

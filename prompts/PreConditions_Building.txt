@@ -1,0 +1,20 @@
+from perception_utils import parse_keypoints_state, object_is_in_hand
+from env_utils import back_to_inital_pose()
+
+#Query: Back to inital pose
+ret_val = back_to_inital_pose()
+
+#Query: Check if the transparent beaker is on the end effector.
+t_beaker_state = parse_keypoints_state("transparent beaker")
+t_beaker_state_pose = t_beaker_state_state.get("adjust", t_beaker_state["select"])["move"][0]()[:]
+ret_val = object_is_in_hand(t_beaker_state_pose[:3])
+
+# Query: Check if the end effector reaches the knife-handle.
+ee_pos = get_ee_pos()
+ee_quat = get_ee_quat()
+knife_state = parse_keypoints_state("knife-handle")
+knife_pose = knife_state.get("adjust", knife_state["select"])["init"][0][:] # "init" doesn't need callback.
+knife_orientation = transform_orientation(name="knife-handle", xyzw=knife_pose[3:], convention='xyz', angle=None, type="object")
+pos_diff = compute_pos_diff(ee_pos, knife_pose[:3], threshold=0.008)
+ori_diff = compute_orientation_diff(ee_quat, knife_orientation, threshold=0.8)
+ret_val = pos_diff and ori_diff

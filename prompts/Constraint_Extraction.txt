@@ -1,0 +1,34 @@
+from perception_utils import get_2d_coords, map_keypoints, merge_keypoints_state, get_3d_state, register_save_keypoints
+from inference_utils import mllm_inference
+from adjust_utils import keypoints_adjust
+
+#Query: Select keypoints on the pen and pen holder, and adjust the pen’s keypoint to the left end.
+objects = ["pen", "pen holder"]
+sel_keypoints = mllm_inference("Select keypoints on the pen and pen holder.", type="select")
+keypoints_coords = get_2d_coords(sel_keypoints)
+assert map_keypoints(keypoints_coords, objects), "keypoints don't match the objects.
+adj_keypoints_coords = keypoints_adjust("get the selected keypoints, and adjust the pen’s keypoint to the left end")
+keypoints_coords["pen"]["adjust"] = adj_keypoints_coords
+keypoints_state = get_3d_state(keypoints_coords)
+register_save_keypoints(keypoints_state)
+
+#Query: Select keypoints on the transparent beaker’s opening and the chemical station center, and adjust the transparent beaker's opening to the average of the mask edge points and the bottom.
+objects = ["transparent beaker", "chemical station"]
+sel_keypoints = mllm_inference("Select keypoints on the transparent beaker’s opening and the chemical station center.", type="select")
+keypoints_coords = get_2d_coords(sel_keypoints)
+assert map_keypoints(keypoints_coords, objects), "keypoints don't match the objects.
+adj_keypoints_position = keypoints_adjust("get the selected keypoints, and adjust the transparent beaker's opening to the average of the mask edge points and the bottom")
+keypoints_state = get_3d_state(keypoints_coords)
+keypoints_state = merge_keypoints_state(keypoints_state, adj_keypoints_position, object="transparent beaker", type="adjust")
+register_save_keypoints(keypoints_state)
+
+#Query: Select keypoints on the funnel's narrow long stem and the ring clamp center, and adjust the funnel's keypoint to the edge and the ring clamp's opening to the average of the mask edge points and the bottom.
+objects = ["funnel", "ring clamp"]
+sel_keypoints = mllm_inference("Select keypoints on the funnel's narrow long stem and the ring clamp center.", type="select")
+keypoints_coords = get_2d_coords(sel_keypoints)
+assert map_keypoints(keypoints_coords, objects), "keypoints don't match the objects.
+adj_keypoints_coords, adj_keypoints_position = keypoints_adjust("get the selected keypoints, and adjust the funnel's keypoint to the edge and the ring clamp's opening to the average of the mask edge points and the bottom.")
+keypoints_coords["funnel"]["adjust"] = adj_keypoints_coords
+keypoints_state = get_3d_state(keypoints_coords)
+keypoints_state = merge_keypoints_state(keypoints_state, adj_keypoints_position, object="ring clamp", type="adjust")
+register_save_keypoints(keypoints_state)

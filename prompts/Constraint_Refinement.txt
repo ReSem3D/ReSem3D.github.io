@@ -1,0 +1,42 @@
+from perception_utils import parse_keypoints, parse_object_pose, transform_to_label, transform_to_coords, process_edge_position
+from inference_utils import mllm_inference
+
+#Query: get the selected keypoints, and adjust the pen’s keypoint to the left end.
+keypoints_coords = parse_keypoints_coords("pen")["select"] #select and then adjust
+label = transform_to_label(keypoints_coords)
+adjust_label = mllm_inference("adjust the pen’s keypoint to the left end.", type="adjust", params=[keypoints_coords[-1], label])
+adjust_coords = transform_to_coords(adjust_label)
+ret_val = adjust_coords
+
+#Query: get the selected keypoints, and adjust the transparent beaker's opening to the average of the mask edge points and the bottom.
+keypoints_coords = parse_keypoints_coords("transparent beaker")["select"]
+edge_coords = get_mask_edge_points(keypoints_coords)
+edge_avg_pos = process_edge_position(edge_coords)
+bottom_pos = edge_avg_pos.copy()
+bottom_pos[2] = parse_object_pose("workbench")[2]
+ret_val = [edge_avg_pos, bottom_pos]
+
+#Query: get the selected keypoints, and adjust the funnel's keypoint to the edge and the ring clamp's opening to the average of the mask edge points.
+funnel_kpts_coords = parse_keypoints_coords("funnel")["select"]
+ring_clamp_kpts_coords = parse_keypoints_coords("ring clamp")["select"]
+label = transform_to_label(funnel_kpts_coords)
+adjust_label = mllm_inference("adjust the funnel's keypoint to the edge.", type="adjust", params=[keypoints_coords[-1], label])
+adjust_coords = transform_to_coords(adjust_label)
+edge_coords = get_mask_edge_points(ring_clamp_kpts_coords)
+edge_avg_pos = process_edge_position(edge_coords)
+ret_val = adjust_coords, [edge_avg_pos]
+
+# Query: get the selected keypoints, and adjust the rocker switch's keypoint to the average of the mask edge points.
+keypoints_coords = parse_keypoints_coords("rocker switch")["select"]
+edge_coords = get_mask_edge_points(keypoints_coords)
+edge_avg_pos = process_edge_position(edge_coords)
+ret_val = [edge_avg_pos]
+
+# Query: get the selected keypoints, and adjust the towel's keypoint to its four corners.
+keypoints_coords = parse_keypoints_coords("towel")["select"]
+label = transform_to_label(keypoints_coords)
+adjust_label = mllm_inference("adjust the towel's keypoint to its four corners.", type="adjust", params=[keypoints_coords[-1], label])
+adjust_coords = transform_to_coords(adjust_label)
+adjust_coords = np.array(adjust_coords)
+pairwise_avg = (adjust_coords[::2] + adjust_coords[1::2])/2
+ret_val = pairwise_avg.tolist()

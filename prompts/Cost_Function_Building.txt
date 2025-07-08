@@ -1,0 +1,172 @@
+from env_utils import mppi_get_ee_pose, compute_orientation_cost, compute_reach_cost
+from perception_utils import parse_keypoints_state, transform_orientation
+
+#Query: Place the funnel on the ring clamp.
+#Target
+funnel_state = parse_keypoints_state("funnel")
+ring_clamp_state = parse_keypoints_state("ring clamp")
+ring_clamp_pose = ring_clamp_state.get("adjust", ring_clamp_state["select"])["move"][0]()[:]
+funnel_state_pose = funnel_state.get("adjust", funnel_state["select"])["move"][0]()[:]
+ring_clamp_orientation = transform_orientation(name="ring clamp", xyzw=ring_clamp_pose[3:], convention='xyz', angle=None, type='object')
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, ring_clamp_orientation)
+reach_cost = compute_reach_cost(ee_pos, ring_clamp_pose[:3]) 
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Place the transparent beaker on the chemical station with default pos/ori weights.
+#Target
+t_beaker_state = parse_keypoints_state("transparent beaker")
+chemical_station_state = parse_keypoints_state("chemical station")
+chemical_station_pose = chemical_station_state.get("adjust", chemical_station_state["select"])["move"][0]()[:]
+t_beaker_pose1, t_beaker_pose2 = t_beaker_state.get("adjust")["move"][0]()[:], t_beaker_state.get("adjust")["move"][-1]()[:]
+chemical_station_pose[2] += t_beaker_pose1[2] - t_beaker_pose2[2]
+chemical_station_orientation = transform_orientation(name="chemical station", xyzw=chemical_station_pose[3:], convention='xyz', angle=None, type='object')
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, chemical_station_orientation)
+reach_cost = compute_reach_cost(ee_pos, chemical_station_pose[:3]) 
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Move the end effector to the transparent beaker with default pos/ori weights.
+#Target
+t_beaker_state = parse_keypoints_state("transparent beaker")
+t_beaker_pose = t_beaker_state.get("adjust", t_beaker_state["select"])["move"][0]()[:] # "move" needs callback
+t_beaker_orientation = transform_orientation(name="breaker", xyzw=t_beaker_state_pose[3:], convention='xyz', angle=None, type='object')
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, t_beaker_orientation)
+reach_cost = compute_reach_cost(ee_pos, t_beaker_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Move the end effector to the horizontal marker with default pos/ori weights
+#Target
+h_marker_state = parse_keypoints_state("horizontal marker")
+h_marker_pose = h_marker_state.get("adjust", h_marker_state["select"])["move"][0]()[:] # "move" needs callback
+h_marker_orientation = transform_orientation(name="marker", xyzw=h_marker_pose[3:], convention='xyz', angle=None, type='object')
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, h_marker_orientation)
+reach_cost = compute_reach_cost(ee_pos, h_marker_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Raise the stick to a height of 10 cm with default pos/ori weights.
+#Target
+stick_state = parse_keypoints_state("stick")
+stick_pose = stick_state.get("adjust", stick_state["select"])["init"][0][:] # "init" doesn't need callback.
+stick_orientation = transform_orientation(name="stick", xyzw=stick_pose[3:], convention='xyz', angle=None, type='object')
+stick_pose[2] += 0.1
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, stick_orientation)
+reach_cost = compute_reach_cost(ee_pos, stick_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Move the transparent breaker 20cm above the chemical station with default pos/ori weights.
+#Target
+t_breaker_state = parse_keypoints_state("transparent breaker")
+chemical_station_state = parse_keypoints_state("chemical station")
+t_breaker_pose = t_breaker_state.get("adjust", t_breaker_state["select"])["move"][0]()[:] # "move" needs callback.
+chemical_station_pose = chemical_station_state.get("adjust", chemical_station_state["select"])["move"][0]()[:] # "move" needs callback.
+chemical_station_orientation = transform_orientation(name="chemical station", xyzw=chemical_station_pose[3:], convention='xyz', angle=None, type='object')
+chemical_station_pose[2] += 0.2
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, chemical_station_orientation)
+reach_cost = compute_reach_cost(ee_pos, chemical_station_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Hold the marker vertically at a height of 10 cm with default pos/ori weights.
+#Target
+marker_state = parse_keypoints_state("marker")
+marker_pose = marker_state.get("adjust", marker_state["select"])["init"][0][:] # "init" doesn't need callback.
+marker_pose[2] += 0.1
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_world_vector_cost(ee_wxyz, world_axis="z", ee_axis='x', degree=0, use_positive_direction=True)
+reach_cost = compute_reach_cost(ee_pos, marker_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Tip the reagent bottle at a 135° angle, 10 cm above the petri dish with high pos/ori weights.
+#Target
+p_dish_state = parse_keypoints_state("petri dish")
+p_dish_pose = p_dish_state.get("adjust", p_dish_state["select"])["move"][0]()[:] # "move" needs callback.
+p_dish_pose[2] += 0.1
+#Cost
+weights = [10, 0.05]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_world_vector_cost(ee_wxyz, world_axis="z", ee_axis='x', degree=135, use_positive_direction=True)
+reach_cost = compute_reach_cost(ee_pos, p_dish_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Raise the reagent bottle to a height of 25 cm with default pos/ori weights.
+#Target
+r_bottle_state = parse_keypoints_state("reagent bottle")
+r_bottle_pose = r_bottle_state.get("adjust", r_bottle_state["select"])["init"][0][:] # "init" doesn't need callback.
+r_bottle_orientation = transform_orientation(name="reagent bottle", xyzw=r_bottle_pose[3:], convention='xyz', angle=None, type='object')
+r_bottle_pose[2] += 0.25
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, r_bottle_orientation)
+reach_cost = compute_reach_cost(ee_pos, r_bottle_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Move the end effector to the towel with default pos/ori weights
+#Target
+towel_state = parse_keypoints_state("towel")
+towel_pose = towel_state.get("adjust", towel_state["select"])["init"][0][:] # "init" doesn't need callback.
+towel_orientation = transform_orientation(name="breaker", xyzw=towel_pose[3:], convention='xyz', angle=None, type='object')
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, towel_orientation)
+reach_cost = compute_reach_cost(ee_pos, towel_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Hold the towel to its another end with default pos/ori weights.
+#Target
+towel_state = parse_keypoints_state("towel")
+towel_pose = towel_state.get("adjust", towel_state["select"])["init"][-1][:] # "init" doesn't need callback.
+towel_orientation = transform_orientation(name="towel", xyzw=towel_pose[3:], convention='xyz', angle=None, type='object')
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_orientation_cost(ee_wxyz, towel_orientation)
+reach_cost = compute_reach_cost(ee_pos, towel_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Hold the knife-handle at a height of 10 cm at a 0° angle with high pos/ori weights.
+#Target
+knife_state = parse_keypoints_state("knife-handle")
+knife_pose = knife_state.get("adjust", knife_state["select"])["init"][0][:] # "init" doesn't need callback.
+knife_pose[2] += 0.1
+#Cost
+weights = [10, 0.05]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+orientation_cost = compute_world_vector_cost(ee_wxyz, world_axis="z", ee_axis='y', degree=0, use_positive_direction=True)
+reach_cost = compute_reach_cost(ee_pos, knife_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost
+
+#Query: Move the blade to the cake with default pos/ori weights.
+#Target
+blade_state = parse_keypoints_state("blade")
+cake_state = parse_keypoints_state("cake")
+blade_pose = blade_state.get("adjust", blade_state["select"])["move"][0]()[:] # "move" needs callback.
+keypoint_to_ee = get_keypoint_to_ee(blade_pose)
+cake_pose = cake_state.get("adjust", cake_state["select"])["move"][0]()[:] # "move" needs callback.
+cake_orientation = transform_orientation(name="cake", xyzw=cake_pose[3:], convention='xyz', angle=None, type='object')
+#Cost
+weights = [10, 2]
+ee_pos, ee_wxyz = mppi_get_ee_pose()
+blade_keypoint = transform_ee_to_keypoint(ee_pos, ee_wxyz, keypoint_to_ee)
+orientation_cost = compute_orientation_cost(ee_wxyz, cake_orientation)
+reach_cost = compute_reach_cost(blade_keypoint, cake_pose[:3])
+ret_val = weights[0] * reach_cost + weights[1] * orientation_cost

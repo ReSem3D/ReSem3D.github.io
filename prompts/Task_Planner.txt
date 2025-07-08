@@ -1,0 +1,173 @@
+from task_utils import task_decompose
+from perception_utils import keypoints_generate
+
+#Query: Pick up the transparent beaker and place it on the chemical station, adjust the transparent breaker's opening keypoint.
+keypoints_generate("Select keypoints on the transparent beaker’s opening and the chemical station center, and adjust the transparent beaker's opening to the average of the mask edge points and the bottom")
+tasks = [
+    "Pick up the transparent beaker",
+    "Raise the transparent beaker to a height of 20 cm",
+    "Move the transparent breaker 20cm above the chemical station"
+    "Place the transparent beaker on the chemical station"
+    "Open gripper"]
+
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+# Query: Pick up the stick and raise it to a height of 10 cm.
+keypoints_generate("Select keypoints on the stick's center")
+tasks = [
+    "Pick up the stick"，
+    "Raise the stick to a height of 10 cm"]
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+# Query: Pick up the funnel.
+keypoints_generate("Select keypoints on the funnel's narrow long stem.")
+tasks = [
+    "Pick up the funnel"]
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+#Query: Pick up the horizontal marker vertically to a height of 10 cm, adjust the horizontal marker's keypoint to the edge.
+keypoints_generate("Select keypoints on the horizontal marker's center, adjust the horizontal marker's keypoint to the edge")
+tasks = [
+    "Pick up the horizontal marker"，
+    "Raise the horizontal marker at a height of 10 cm",
+    "Hold the marker vertically at a height of 10 cm."]
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+#Query: Please give me a tissue.
+keypoints_generate("Select keypoints on the tissue, not tissue box")
+tasks = [
+    "grasp the tissue"，
+    ]
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+#Query: Please turn on the light.
+keypoints_generate("Select keypoints on the rocker switch's right, and adjust the rocker switch's keypoint to the average of the mask edge points")
+tasks = [
+    "Close gripper",
+    "Touch the rocker switch",
+    ]
+
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+# done
+
+#Query: Pick up the funnel vertically on the ring clamp, adjust the funnel's keypoint to the edge and the ring clamp's opening to the average of the mask edge points.
+keypoints_generate("Select keypoints on the funnel's narrow long stem and the ring clamp's center, and adjust the funnel's keypoint to the edge and the ring clamp's opening to the average of the mask edge points")
+tasks = [
+    "Pick up the funnel",
+    "Raise the funnel at a height of 25 cm",
+    "Hold the funnel vertically at a height of 25 cm"
+    "Move the funnel 2cm above the ring clamp"
+    "Open gripper"]
+
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+#Query: Pick up the reagent bottle and pour the liquid into the petri dish, adjust the reagent bottle's opening keypoint.
+keypoints_generate("Select keypoints on the reagent bottle’s opening and the petri dish center, and adjust the reagent bottle's opening to the average of the mask edge points and the bottom")
+tasks = [
+    "Pick up the reagent bottle",
+    "Raise the funnel at a height of 25 cm",
+    "Move the reagent bottle 15cm above the petri dish"
+    "Tip the reagent bottle at a 180° angle, 10 cm above the petri dish"
+    ]
+
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+#Query: Please fold the towel.
+keypoints_generate("Select keypoints on the towel’s center, and adjust the towel's keypoint to its four corners")
+tasks = [
+    "Pick up the the towel",
+    "Raise the towel at a height of 5 cm"
+    "Hold the towel to its another end at a height of 5cm",
+    "Open gripper"
+    ]
+
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+#Query: Pick up the knife and use the blade to cut the cake.
+keypoints_generate("Select keypoints on the knife-handle’s center and the blade's center and the cake's center")
+tasks = [
+    "Pick up the the knife-handle",
+    "Raise the knife-handle at a height of 10 cm"
+    "Hold the knife-handle at a height of 20 cm at a 0° angle"
+    "Move the blade to the cake"
+    ]
+
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
+
+# Query: Pick up the bread and place on the toaster, adjust the toaster's keypoint to the average of the mask edge points..
+keypoints_generate("Select keypoints on the bread’s center and the toaster’s center, and adjust the toaster's keypoint to the average of the mask edge points")
+tasks = [
+    "Pick up the bread",
+    "Raise the bread at a height of 20 cm",
+    "Move the bread 15cm above the toaster",
+    "Move the bread 6.5cm above the toaster",
+    "Open gripper"
+    ]
+
+current_task = 0
+while current_task < len(tasks):
+    if task_decompose(tasks[current_task]):
+        current_task += 1
+    else:
+        current_task = max(0, current_task - 1)
+# done
