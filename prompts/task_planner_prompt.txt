@@ -6,7 +6,7 @@ constraint_extraction("Extract constraints for beaker’s opening and chemical s
 tasks = [
     "Grasp the beaker",
     "Raise the beaker to a height of 20 cm",
-    "Move the breaker 7cm above the chemical station",
+    "Move the breaker 16cm above the chemical station",
     "Open the gripper"]
 
 current_task = 0
