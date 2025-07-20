@@ -2,9 +2,9 @@ body {
   font-family: 'Noto Sans', sans-serif;
 }
 
- /* changed css */
+/* interactive menu buttons */
 #interative-menu-sim {
-  border: 2px solid #3273dc; /* Bulma 主色 */
+  border: 2px solid #3273dc; /* Bulma primary color */
   background-color: #ffffff;
   transition: box-shadow 0.2s ease;
 }
@@ -13,26 +13,25 @@ body {
 }
 
 #interative-menu-real-household {
-  border: 2px solid #3273dc; /* Bulma 主色 */
+  border: 2px solid #3273dc; /* Bulma primary color */
   background-color: #ffffff;
   transition: box-shadow 0.2s ease;
 }
-
 #interative-menu-real-household:hover {
   box-shadow: 0 0 0 3px rgba(50, 115, 220, 0.2);
 }
 
 #interative-menu-real-chemical-lab {
-  border: 2px solid #3273dc; /* Bulma 主色 */
+  border: 2px solid #3273dc; /* Bulma primary color */
   background-color: #ffffff;
   transition: box-shadow 0.2s ease;
 }
-
 #interative-menu-real-chemical-lab:hover {
   box-shadow: 0 0 0 3px rgba(50, 115, 220, 0.2);
 }
 
- .note-container {
+/* note box styles */
+.note-container {
   display: flex;
   justify-content: center;
   margin: 30px 0;
@@ -69,87 +68,87 @@ body {
 .note-chrome { color: #2ed573; }
 .note-ubuntu { color: #1e90ff; }
 
- .container-columns {
+/* layout for split columns */
+.container-columns {
   display: flex;
-  height: 600px; /* 固定高度，确保两列高度一致 */
+  height: 600px; /* fixed height for equal columns */
   gap: 20px;
   box-sizing: border-box;
   padding: 10px;
 }
 
-/* 左边文本框 */
-  /* 美化后的左边文本框 */
-  .left-textbox {
-    height: 50%;
-    background: linear-gradient(145deg, #ffffff, #f5f7fa);
-    border: 1.5px solid #4a90e2;
-    border-radius: 12px;
-    padding: 20px;
-    overflow-y: auto;
-    box-shadow: 0 6px 18px rgba(74, 144, 226, 0.15);
-    transition: all 0.3s ease;
-    position: relative;
-  }
-
-  .left-textbox:hover {
-    box-shadow: 0 8px 24px rgba(74, 144, 226, 0.25);
-    transform: translateY(-2px);
-  }
-
-  .left-textbox h3 {
-    color: #004080;
-    font-size: 18px;
-    margin-bottom: 15px;
-    font-weight: 600;
-    border-bottom: 2px solid #4a90e2;
-    padding-bottom: 8px;
-  }
-
-  .left-textbox p {
-    line-height: 1.8;
-    font-size: 15px;
-  }
-
-  .left-textbox p br {
-    content: "";
-    display: block;
-    margin-bottom: 2px;
-  }
-
-  /* 步骤指示器 */
-  .left-textbox .step {
-    position: relative;
-    padding-left: 30px;
-    margin-bottom: 15px;
-  }
-
-  .left-textbox .step::before {
-    content: attr(data-step);
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 22px;
-    height: 22px;
-    background-color: #4a90e2;
-    color: white;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 22px;
-    font-size: 14px;
-    font-weight: bold;
-  }
-
-/* 右边视频容器 */
-.right-video-container {
-  flex: 0 0 60%; /* 宽度60% */
-  display: flex;
-  justify-content: center; /* 水平居中 */
-  align-items: center;     /* 垂直居中 */
-  box-sizing: border-box;
-  background: none; /* 无边框背景，干净 */
+/* left side textbox */
+.left-textbox {
+  height: 50%;
+  background: linear-gradient(145deg, #ffffff, #f5f7fa);
+  border: 1.5px solid #4a90e2;
+  border-radius: 12px;
+  padding: 20px;
+  overflow-y: auto;
+  box-shadow: 0 6px 18px rgba(74, 144, 226, 0.15);
+  transition: all 0.3s ease;
+  position: relative;
 }
 
-/* 视频元素样式 */
+.left-textbox:hover {
+  box-shadow: 0 8px 24px rgba(74, 144, 226, 0.25);
+  transform: translateY(-2px);
+}
+
+.left-textbox h3 {
+  color: #004080;
+  font-size: 18px;
+  margin-bottom: 15px;
+  font-weight: 600;
+  border-bottom: 2px solid #4a90e2;
+  padding-bottom: 8px;
+}
+
+.left-textbox p {
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+.left-textbox p br {
+  content: "";
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* step indicator */
+.left-textbox .step {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 15px;
+}
+
+.left-textbox .step::before {
+  content: attr(data-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 22px;
+  height: 22px;
+  background-color: #4a90e2;
+  color: white;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* right side video container */
+.right-video-container {
+  flex: 0 0 60%; /* 60% width */
+  display: flex;
+  justify-content: center; /* center horizontally */
+  align-items: center;     /* center vertically */
+  box-sizing: border-box;
+  background: none; /* clean background */
+}
+
+/* video element style */
 .right-video-container video {
   width: 100%;
   max-height: 100%;
@@ -157,7 +156,6 @@ body {
   border-radius: 8px;
   display: block;
 }
- /* changed css */
 
 .footer .icon-link {
     font-size: 25px;
