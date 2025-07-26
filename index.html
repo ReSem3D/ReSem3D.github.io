@@ -350,9 +350,7 @@
 
 <section class="section">
   <div class="container is-max-widescreen">
-
     <div class="rows">
-
 
     <!-- Animation. -->
     <div class="rows is-centered ">
@@ -360,19 +358,22 @@
         <h2 class="title is-3">ReSem3D FrameWork</h2>
 
         <!-- Interpolating. -->
-        <div class="content has-text-justified">
-        <!-- <br> -->
-        </div>
-        <img src="media/figures/framework.png" class="interpolation-image" />
+        <img src="media/figures/framework.svg" class="interpolation-image" />
         </br>
         </br>
           <p class="content has-text-justified">
             <strong>Framework.</strong> Given natural language instruction and RGB-D observations, VFM segments semantically relevant part-level regions and overlays visual prompts to facilitate initial constraint generation. Under the MLLM-driven TAMP framework, constraint modeling is conducted hierarchically in two stages: part-level extraction and region-level refinement. The resulting 3D spatial constraints are encoded as cost function for real-time parsing and solved in closed-loop by MPPI-based optimizer in Isaac Gym, enabling joint-space velocity control with point tracking.
           </p>
-          
+        <!-- Interpolating. -->
+        <img src="media/figures/task.svg" class="interpolation-image" />
+        </br>
+          <p class="content has-text-justified">
+            <strong>Task.</strong> ReSem3D is a unified robotic manipulation framework for semantically diverse environments. It leverages the synergy between MLLMs and VFMs
+            to construct semantics-driven, two-stage hierarchical 3D spatial constraints, which are mapped into real-time optimization objectives in joint space to enable
+            closed-loop perception-action control.
+          </p>
         </br>
         </br>
-
         <!--/ Re-rendering. -->
 
         <h2 class="title is-3">Interactive Visualization (Simulation)</h2>
